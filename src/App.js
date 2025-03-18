@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import { ContextHolder, useAuth, useLoginWithRedirect } from "@frontegg/react";
+import { memo } from "react";
+import "./App.css";
+import AccountInfo from "./components/AccountInfo";
+import SignupBanner from "./components/SignupBanner";
+import Welcome from "./components/Welcome";
+import Header from "./components/Header";
 
-function App() {
+const App = () => {
+  const { isAuthenticated } = useAuth();
+  const loginWithRedirect = useLoginWithRedirect();
+
+  const handleLogout = () => {
+    const baseUrl = ContextHolder.for().getContext().baseUrl;
+    window.location.href = `${baseUrl}/oauth/logout?post_logout_redirect_uri=${window.location.href}`;
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Header isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+      {isAuthenticated ? (
+        <AccountInfo />
+      ) : (
+        <Welcome onSignIn={loginWithRedirect} />
+      )}
+      <SignupBanner />
     </div>
   );
-}
+};
 
-export default App;
+export default memo(App);
