@@ -1,7 +1,11 @@
 import { memo } from "react";
-import PropTypes from "prop-types";
 
-const Header = memo(({ isAuthenticated, onLogout }) => (
+interface HeaderProps {
+  isAuthenticated: boolean;
+  onLogout: () => void;
+}
+
+const Header = memo(({ isAuthenticated, onLogout }: HeaderProps) => (
   <header className="header">
     <div className="container header-wrapper">
       <div className="logo-wrapper">
@@ -29,10 +33,5 @@ const Header = memo(({ isAuthenticated, onLogout }) => (
     </div>
   </header>
 ));
-
-Header.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
-  onLogout: PropTypes.func.isRequired,
-};
 
 export default Header;

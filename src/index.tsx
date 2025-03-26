@@ -5,7 +5,11 @@ import App from "./App";
 import { FronteggProvider } from "@frontegg/react";
 import { sanboxContextOptions } from "./config/sanboxContextOptions";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const container = document.getElementById("root");
+if (!container) {
+  throw new Error("Root element not found");
+}
+const root = ReactDOM.createRoot(container);
 root.render(
   <React.StrictMode>
     <FronteggProvider

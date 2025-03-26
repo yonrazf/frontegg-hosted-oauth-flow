@@ -11,7 +11,7 @@ const App = () => {
   const loginWithRedirect = useLoginWithRedirect();
 
   const handleLogout = () => {
-    const baseUrl = ContextHolder.for().getContext().baseUrl;
+    const baseUrl = ContextHolder.for(undefined as any).getContext().baseUrl;
     window.location.href = `${baseUrl}/oauth/logout?post_logout_redirect_uri=${window.location.href}`;
   };
 

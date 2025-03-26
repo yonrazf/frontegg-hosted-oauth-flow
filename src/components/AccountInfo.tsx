@@ -12,13 +12,13 @@ const AccountInfo = () => {
     AdminPortal.show();
   };
 
-  const userRoles = user.roles.map((role) => role.name).join(", ");
+  const userRoles = user?.roles.map((role) => role.name).join(", ");
 
   return (
     <main className="section-screen">
       <div className="section-card account-card">
         <div className="title-wrapper">
-          <h1 className="title">Hello, {user.name}!</h1>
+          <h1 className="title">Hello, {user?.name || ""}!</h1>
           <button 
             className="primary-button fit-content" 
             onClick={handleAdminPortal}
@@ -33,12 +33,12 @@ const AccountInfo = () => {
               <div className="tenant-logo">
                 <UserProfileIcon user={user} />
               </div>
-              <p className="tenant-name">{user.name}</p>
+              <p className="tenant-name">{user?.name || ""}</p>
             </div>
             <div className="tenant-info">
-              <UserInfoItem title="Name" value={user.name} />
-              <UserInfoItem title="Email" value={user.email} />
-              <UserInfoItem title="Roles" value={userRoles} />
+              <UserInfoItem title="Name" value={user?.name || ""} />
+              <UserInfoItem title="Email" value={user?.email || ""} />
+              <UserInfoItem title="Roles" value={userRoles || ""} />
             </div>
             <button
               className="secondary-button edit-button"

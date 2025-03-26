@@ -1,4 +1,4 @@
-const getInitials = (name) => {
+const getInitials = (name: string) => {
   if (!name) return '';
   return name
     .split(" ")

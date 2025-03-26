@@ -1,12 +1,23 @@
 import { useEffect, useRef, useState } from "react";
 import getInitials from "../utils/getInitials";
+import { ITenantsResponseV2 } from "@frontegg/rest-api";
 
-const TenantsDropdown = ({ items, selected, setSelected }) => {
+interface TenantsDropdownProps {
+  items: ITenantsResponseV2[];
+  selected: ITenantsResponseV2;
+  setSelected: (tenant: ITenantsResponseV2) => void;
+}
+
+const TenantsDropdown = ({
+  items,
+  selected,
+  setSelected,
+}: TenantsDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: any) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
       }

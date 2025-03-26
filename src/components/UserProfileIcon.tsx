@@ -1,16 +1,19 @@
-import { memo } from "react";
-import PropTypes from "prop-types";
 import getInitials from "../utils/getInitials";
+import { User } from "@frontegg/redux-store";
 
-const UserProfileIcon = memo(({ user }) => {
-  const handleImageError = (e) => {
+interface UserProfileIconProps {
+  user: User | null | undefined;
+}
+
+const UserProfileIcon = ({ user }: UserProfileIconProps) => {
+  const handleImageError = (e: any) => {
     e.target.style.display = "none";
     e.target.parentNode.innerHTML = `<div class="initials" role="img" aria-label="User initials">${getInitials(
-      user.name
+      user?.name || ""
     )}</div>`;
   };
 
-  if (user.profilePictureUrl) {
+  if (user?.profilePictureUrl) {
     return (
       <img
         src={user.profilePictureUrl}
@@ -24,16 +27,9 @@ const UserProfileIcon = memo(({ user }) => {
 
   return (
     <div className="initials" role="img" aria-label="User initials">
-      {getInitials(user.name)}
+      {getInitials(user?.name || "")}
     </div>
   );
-});
-
-UserProfileIcon.propTypes = {
-  user: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    profilePictureUrl: PropTypes.string,
-  }).isRequired,
 };
 
 export default UserProfileIcon;

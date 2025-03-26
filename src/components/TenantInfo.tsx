@@ -3,6 +3,11 @@ import getInitials from "../utils/getInitials";
 import TenantsDropdown from "./TenantsDropdown";
 import { useEffect, useState } from "react";
 import CopyToClipboardButton from "./CopyToClipboardButton";
+import { ITenantsResponseV2 } from "@frontegg/rest-api";
+
+type ITentantsExtended = ITenantsResponseV2 & {
+  creatorEmail: string;
+};
 
 const TenantInfo = () => {
   const { switchTenant, loadUsers } = useAuthActions();
@@ -15,7 +20,7 @@ const TenantInfo = () => {
     AdminPortal.show();
   };
 
-  const handleSwitchTenant = (tenant) => {
+  const handleSwitchTenant = (tenant: ITenantsResponseV2) => {
     switchTenant({ tenantId: tenant.tenantId });
   };
 
@@ -28,7 +33,7 @@ const TenantInfo = () => {
       pageOffset: 0,
       pageSize: 100,
       callback: (res) => {
-        setTotalMembers(res.length);
+        setTotalMembers((res || []).length);
       },
     }).finally(() => {
       setIsLoadingMembers(false);
@@ -73,7 +78,7 @@ const TenantInfo = () => {
         <div className="tenant-info-item">
           <p className="tenant-info-item-title">Creator</p>
           <p className="tenant-info-item-value">
-            {tenantsState.activeTenant.creatorEmail || "system"}
+            {(tenantsState.activeTenant as ITentantsExtended).creatorEmail || "system"}
           </p>
         </div>
       </div>

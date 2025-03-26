@@ -1,6 +1,9 @@
 import React from "react";
+interface CopyToClipboardButtonProps {
+  text: string;
+}
 
-const CopyToClipboardButton = ({ text }) => {
+const CopyToClipboardButton = ({ text }: CopyToClipboardButtonProps) => {
   const handleCopy = () => {
     navigator.clipboard
       .writeText(text)

@@ -1,6 +1,8 @@
-import React from "react";
+interface WelcomeProps {
+  onSignIn: () => void;
+}
 
-function Welcome({onSignIn}) {  
+const Welcome = ({ onSignIn }: WelcomeProps) => {
   return (
     <section className="section-screen">
       <div className="section-card welcome-card">
@@ -18,6 +20,6 @@ function Welcome({onSignIn}) {
       </div>
     </section>
   );
-}
+};
 
 export default Welcome;
