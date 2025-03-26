@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@100;200;300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@100;200;300;400;500;600;700&display=swap");
 
 html,
 body,
@@ -6,16 +6,19 @@ body,
   height: 100%;
   margin: 0;
   background-color: #f9fafc;
-  font-family: 'Manrope', sans-serif;
-
+  font-family: "Manrope", sans-serif;
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
   line-height: 100%;
-  font-family: 'Manrope', sans-serif;
+  font-family: "Manrope", sans-serif;
+}
 
+body {
+  overflow: auto;
+  height: 100%;
 }
 
 :root {

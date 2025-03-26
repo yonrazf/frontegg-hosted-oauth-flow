@@ -28,7 +28,7 @@ const AccountInfo = () => {
           </button>
         </div>
         <div className="tenants-wrapper">
-          <article className="tenant-card">
+          <div className="tenant-card">
             <div className="tenant-title">
               <div className="tenant-logo">
                 <UserProfileIcon user={user} />
@@ -47,7 +47,7 @@ const AccountInfo = () => {
             >
               Edit user
             </button>
-          </article>
+          </div>
           <TenantInfo />
         </div>
       </div>

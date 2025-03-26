@@ -2,6 +2,7 @@ import { AdminPortal, useAuth, useAuthActions } from "@frontegg/react";
 import getInitials from "../utils/getInitials";
 import TenantsDropdown from "./TenantsDropdown";
 import { useEffect, useState } from "react";
+import CopyToClipboardButton from "./CopyToClipboardButton";
 
 const TenantInfo = () => {
   const { switchTenant, loadUsers } = useAuthActions();
@@ -54,9 +55,12 @@ const TenantInfo = () => {
       <div className="tenant-info">
         <div className="tenant-info-item">
           <p className="tenant-info-item-title">ID</p>
-          <p className="tenant-info-item-value">
-            {tenantsState.activeTenant.id}
-          </p>
+          <div className="tenant-info-copy-wrapper">
+            <p className="tenant-info-item-value ellipsis">
+              {tenantsState.activeTenant.id}
+            </p>
+            <CopyToClipboardButton text={tenantsState.activeTenant.id} />
+          </div>
         </div>
 
         <div className="tenant-info-item">
