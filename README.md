@@ -4,7 +4,7 @@
 
 This sample showcases how to seamlessly add authentication and user management to your React app using Frontegg’s hosted login method.
 
-## This app showcases -
+## This app showcases
 
 - Redirect users to Frontegg’s hosted login
 - Enable a fully integrated self-service portal
@@ -13,7 +13,7 @@ This sample showcases how to seamlessly add authentication and user management t
 - Handle account state and data with ease
 - Implement seamless account switching functionality
 
-## What you’ll need - 
+## What you’ll need
 
 - [Node.js](https://nodejs.org)
 - npm (comes with Node.js)
@@ -28,7 +28,7 @@ If you don’t have a Frontegg account or prefer to use the sandbox credentials,
 
 If you're using your own credentials, follow the guidelines below.
 
-### 1. Configure your Frontegg application (if using your own account)
+### 1. Configure your Frontegg application (if using your own account) -
 
 1. Go to [Frontegg Portal](https://portal.frontegg.com/)
 2. Get your application ID from [ENVIRONMENT] → Applications
