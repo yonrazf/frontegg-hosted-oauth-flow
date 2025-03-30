@@ -1,30 +1,40 @@
 ![React Hosted Login Banner](/public/assets/react-banner.png)
 
-# React Hosted Login Sample
+# React hosted login sample
 
-This sample demonstrates how to add authentication to a React application using Frontegg's Hosted Login solution.
+This sample showcases how to seamlessly add authentication and user management to your React app using Frontegg’s hosted login method.
 
-## Requirements
+## This app showcases -
+
+- Redirect users to Frontegg’s hosted login
+- Enable a fully integrated self-service portal
+- Manage and track user authentication state
+- Access and display user profile details
+- Handle account state and data with ease
+- Implement seamless account switching functionality
+
+## Requirements - 
 
 - [Node.js](https://nodejs.org)
 - npm (comes with Node.js)
-- A Frontegg account. [Sign up for free](https://portal.frontegg.com/signup).
+- You'll need a Frontegg account. [Sign up for free](https://frontegg-prod.us.frontegg.com/oauth/account/sign-up).
+This project includes preconfigured sandbox credentials, but we recommend using your own Frontegg account if you have one.
 
-## Setup
+## Setup -
 
-### 1. Configure Frontegg Application
+If you don’t have a Frontegg account or prefer to use the sandbox credentials, feel free to skip to step **2**.
+
+If you're using your own credentials, follow the guidelines below.
+
+### 1. Frontegg application -
 
 1. Go to [Frontegg Portal](https://portal.frontegg.com/)
-2. Configure your application settings
-3. Get your Client ID and API key from the Frontegg Portal
+2. Get your application ID from [ENVIRONMENT] → Applications
+3. Get your Frontegg domain from the Frontegg Portal → [ENVIRONMENT] → Keys & domains
+4. This sample runs on `http://localhost:3000`. If your application uses a different port, make sure to add `http://localhost:3000` under → [ENVIRONMENT] → Authentication → Login method → Redirect URLs.
+5. This sample runs on `http://localhost:3000`. You may need to add `http://localhost:3000` under → [ENVIRONMENT] → Keys & domains → Allowed origins.
 
-### 2. Configuration
-
-This project comes with pre-configured test credentials in `/src/config/sanboxContextOptions.js`. These credentials are set up for demonstration purposes, allowing you to test the authentication flow immediately.
-
-When deploying to production, make sure to replace these test credentials with your own Frontegg application credentials.
-
-### 3. Install Dependencies
+### 2. Install dependencies -
 
 Run the following commands:
 
@@ -32,7 +42,7 @@ Run the following commands:
 npm install
 ```
 
-### 4. Run the Application
+### 3. Run the application -
 
 To start the application, run:
 
@@ -40,11 +50,8 @@ To start the application, run:
 npm start
 ```
 
+That’s it — you're all set!
+
 The app will be available at [http://localhost:3000](http://localhost:3000).
 
-## What is Happening?
-
-This application demonstrates:
-- Implementing Frontegg's Hosted Login
-- Managing user authentication state
-- Accessing user profile information
+### Experience Frontegg in action!
