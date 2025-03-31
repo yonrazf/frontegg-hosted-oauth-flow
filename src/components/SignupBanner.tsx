@@ -3,8 +3,7 @@ import { ContextHolder } from "@frontegg/react";
 
 const DEFAULT_SANDBOX_CONTEXT = {
   baseUrl: "https://sandbox.frontegg.com",
-  clientId: "9af126b9-c35f-4e2d-a3f1-c261e22aaf4a",
-  appId: "xxxx",
+  appId: "da398ff8-c069-428e-974a-afcded8c0c04",
 };
 
 function SignupBanner() {
@@ -12,22 +11,26 @@ function SignupBanner() {
 
   useEffect(() => {
     const baseUrl = ContextHolder.for(undefined as any).getContext().baseUrl;
-    const clientId = ContextHolder.for(undefined as any).getContext().clientId;
+    const appId = ContextHolder.for(undefined as any).getContext().appId;
 
     setIsdefaultCredentials(
-      clientId === DEFAULT_SANDBOX_CONTEXT.clientId &&
-        baseUrl === DEFAULT_SANDBOX_CONTEXT.baseUrl
+      baseUrl === DEFAULT_SANDBOX_CONTEXT.baseUrl &&
+        appId === DEFAULT_SANDBOX_CONTEXT.appId
     );
   }, []);
 
   return (
-    <div className={`signup-banner ${isdefaultCredentials ? "show" : ""}`}>
+    <div
+      className={`signup-banner ${
+        !isdefaultCredentials ? "custom-credentials" : ""
+      }`}
+    >
       <div className="container signup-banner-wrapper">
         <p className="signup-banner-text">
           This sample uses Frontegg’s default credentials. Sign up to use your
           own configurations.
           <a
-            href="https://portal.frontegg.com/signup"
+            href="https://frontegg-prod.us.frontegg.com/oauth/account/sign-up"
             target="_blank"
             rel="noreferrer"
           >
@@ -54,7 +57,7 @@ function SignupBanner() {
           </a>
           <div className="third-party-links">
             <a
-              href="https://github.com/frontegg"
+              href="https://github.com/frontegg-samples/react-embedded-login-box"
               target="_blank"
               rel="noreferrer"
               className="icon-link"
