@@ -1,5 +1,4 @@
 export const sanboxContextOptions = {
   baseUrl: "https://sandbox.frontegg.com",
-  clientId: "9af126b9-c35f-4e2d-a3f1-c261e22aaf4a",
-  appId: "xxxx",
+  appId: "da398ff8-c069-428e-974a-afcded8c0c04",
 };
