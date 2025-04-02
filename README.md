@@ -61,8 +61,8 @@ To start the application, run:
 npm start
 ```
 
-That’s it — you're all set!
-
 The app will be available at [http://localhost:3000](http://localhost:3000).
+
+![React samp;e](/public/assets/sample-react.png)
 
 ### Experience Frontegg in action!
