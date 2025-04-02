@@ -1,19 +1,35 @@
-import { AdminPortal, useAuth, useAuthActions } from "@frontegg/react";
-import getInitials from "../utils/getInitials";
-import TenantsDropdown from "./TenantsDropdown";
-import { useEffect, useState } from "react";
-import CopyToClipboardButton from "./CopyToClipboardButton";
+import {
+  AdminPortal,
+  useAuth,
+  useAuthActions,
+  useTeamActions,
+  useTeamState,
+} from "@frontegg/react";
 import { ITenantsResponseV2 } from "@frontegg/rest-api";
+import getInitials from "../utils/getInitials";
+import CopyToClipboardButton from "./CopyToClipboardButton";
+import TenantsDropdown from "./TenantsDropdown";
+import { useEffect, useMemo } from "react";
 
 type ITentantsExtended = ITenantsResponseV2 & {
   creatorEmail: string;
 };
 
 const TenantInfo = () => {
-  const { switchTenant, loadUsers } = useAuthActions();
-  const { tenantsState, user } = useAuth();
-  const [totalMembers, setTotalMembers] = useState(0);
-  const [isLoadingMembers, setIsLoadingMembers] = useState(false);
+  const { switchTenant } = useAuthActions();
+  const { tenantsState } = useAuth();
+  const { loadUsers } = useTeamActions();
+
+  const {
+    loaders: { USERS: isLoadingUsers },
+    users,
+  } = useTeamState();
+
+  useEffect(() => {
+    loadUsers({ pageOffset: 0, pageSize: 100 });
+  }, [loadUsers]);
+
+  const usersCount = useMemo(() => users.length, [users]);
 
   const openAccountSettings = () => {
     window.location.href = "#/admin-box/account";
@@ -23,22 +39,6 @@ const TenantInfo = () => {
   const handleSwitchTenant = (tenant: ITenantsResponseV2) => {
     switchTenant({ tenantId: tenant.tenantId });
   };
-
-  useEffect(() => {
-    if (!user) {
-      return;
-    }
-    setIsLoadingMembers(true);
-    loadUsers({
-      pageOffset: 0,
-      pageSize: 100,
-      callback: (res) => {
-        setTotalMembers((res || []).length);
-      },
-    }).finally(() => {
-      setIsLoadingMembers(false);
-    });
-  }, [user, loadUsers]);
 
   return tenantsState && tenantsState.activeTenant ? (
     <div className="tenant-card">
@@ -71,14 +71,15 @@ const TenantInfo = () => {
         <div className="tenant-info-item">
           <p className="tenant-info-item-title">Members</p>
           <p className="tenant-info-item-value">
-            {isLoadingMembers ? "loading..." : totalMembers}
+            {isLoadingUsers ? "loading..." : usersCount}
           </p>
         </div>
 
         <div className="tenant-info-item">
           <p className="tenant-info-item-title">Creator</p>
           <p className="tenant-info-item-value">
-            {(tenantsState.activeTenant as ITentantsExtended).creatorEmail || "system"}
+            {(tenantsState.activeTenant as ITentantsExtended).creatorEmail ||
+              "system"}
           </p>
         </div>
       </div>

@@ -57,7 +57,7 @@ function SignupBanner() {
           </a>
           <div className="third-party-links">
             <a
-              href="https://github.com/frontegg-samples/react-embedded-login-box"
+              href="https://github.com/frontegg-samples/react-hosted-login.git"
               target="_blank"
               rel="noreferrer"
               className="icon-link"
