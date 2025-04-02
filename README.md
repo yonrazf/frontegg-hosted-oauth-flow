@@ -63,6 +63,6 @@ npm start
 
 The app will be available at [http://localhost:3000](http://localhost:3000).
 
-![React samp;e](/public/assets/sample-react.png)
+![React sample](/public/assets/sample-react.png)
 
 ### Experience Frontegg in action!
