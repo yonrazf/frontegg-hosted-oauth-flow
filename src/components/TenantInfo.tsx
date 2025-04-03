@@ -29,7 +29,7 @@ const TenantInfo = () => {
     loadUsers({ pageOffset: 0, pageSize: 100 });
   }, [loadUsers]);
 
-  const usersCount = useMemo(() => users.length, [users]);
+  const usersCount = users.length;
 
   const openAccountSettings = () => {
     window.location.href = "#/admin-box/account";
