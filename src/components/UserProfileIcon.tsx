@@ -1,5 +1,5 @@
 import getInitials from "../utils/getInitials";
-import { User } from "@frontegg/redux-store";
+import { User } from "../types/user";
 
 interface UserProfileIconProps {
   user: User | null | undefined;

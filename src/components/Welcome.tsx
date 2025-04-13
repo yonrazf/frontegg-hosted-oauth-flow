@@ -1,8 +1,7 @@
-interface WelcomeProps {
-  onSignIn: () => void;
-}
+import { useAuth } from "../providers/AuthProvider";
 
-const Welcome = ({ onSignIn }: WelcomeProps) => {
+const Welcome = () => {
+  const { loginWithPKCE, loginWithAuthCodeFlow } = useAuth();
   return (
     <section className="section-screen">
       <div className="section-card welcome-card">
@@ -14,8 +13,11 @@ const Welcome = ({ onSignIn }: WelcomeProps) => {
             authentication flows.
           </p>
         </div>
-        <button className="primary-button" onClick={onSignIn}>
-          Sign in
+        <button className="primary-button" onClick={loginWithPKCE}>
+          Sign in with PKCE
+        </button>
+        <button className="primary-button" onClick={loginWithAuthCodeFlow}>
+          Sign in with Auth Code Flow
         </button>
       </div>
     </section>
