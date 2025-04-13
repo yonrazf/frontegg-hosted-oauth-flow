@@ -13,10 +13,15 @@ const Main = () => {
 
   return (
     <div className="app">
-      <Header isAuthenticated={isAuthenticated} onLogout={handleLogout} />
-      {isAuthenticated ? <AccountInfo /> : <Welcome />}
-      <SignupBanner />
-      {isLoading && <div className="spinner"></div>}
+      {isLoading ? (
+        <div className="spinner"></div>
+      ) : (
+        <>
+          <Header isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+          {isAuthenticated ? <AccountInfo /> : <Welcome />}
+          <SignupBanner />
+        </>
+      )}
     </div>
   );
 };

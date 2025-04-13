@@ -7,7 +7,6 @@ This sample showcases how to seamlessly add authentication and user management t
 ## This app showcases
 
 - Redirect users to Frontegg’s hosted login
-- Enable a fully integrated self-service portal
 - Manage and track user authentication state
 - Access and display user profile details
 - Handle account state and data with ease
@@ -37,7 +36,7 @@ If you're using your own credentials, follow the guidelines below.
 5. This sample runs on `http://localhost:3000`. You may need to add `http://localhost:3000` under → [ENVIRONMENT] → Keys & domains → Allowed origins
 6. Update your application's credentials under `sanboxContextOptions`
 
-### 2. Clone the repository - 
+### 2. Clone the repository -
 
 Run the following command:
 

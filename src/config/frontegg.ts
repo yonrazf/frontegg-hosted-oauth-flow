@@ -15,6 +15,8 @@ export const FRONTEGG_CONFIG = {
 };
 
 export const FRONTEGG_ENDPOINTS = {
-  authorization: `${FRONTEGG_CONFIG.baseUrl}/oauth/authorize`,
-  token: `${FRONTEGG_CONFIG.baseUrl}/oauth/token`,
+  authorization: `/oauth/authorize`,
+  token: `/oauth/token`,
+  currentUser: `/identity/resources/users/v2/me`,
+  tenants: `/identity/resources/users/v2/me/tenants`,
 };

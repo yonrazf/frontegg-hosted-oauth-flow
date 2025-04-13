@@ -31,8 +31,8 @@ export const OAuthCallback = () => {
       }
 
       try {
-        console.log("state:", state);
-        if (state) {
+        const oauthFlow = localStorage.getItem("FRONTEGG_OAUTH_FLOW");
+        if (oauthFlow === "pkce") {
           console.log(" state is true, going with pkce flow");
           const tokens = await authService.handleCallback(code);
           updateAuthState(tokens.access_token, tokens.refresh_token);

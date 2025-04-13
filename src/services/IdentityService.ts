@@ -1,12 +1,10 @@
-import { FRONTEGG_CONFIG } from "../config/frontegg";
-import { User, UserResponse } from "../types/user";
+import { User } from "../types/user";
 import { ITenantsResponseV2 } from "@frontegg/rest-api";
+import { getCurrentUserUrl, getTenantsUrl } from "../utils/api";
 
 class IdentityService {
-  private static GET_CURRENT_USER_URL = `${FRONTEGG_CONFIG.baseUrl}/identity/resources/users/v2/me`;
-  private static GET_TENANTS_URL = `${FRONTEGG_CONFIG.baseUrl}/identity/resources/users/v2/me/tenants`;
   static async getCurrentUser(token: string): Promise<User> {
-    const response = await fetch(this.GET_CURRENT_USER_URL, {
+    const response = await fetch(getCurrentUserUrl(), {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -24,7 +22,7 @@ class IdentityService {
   }
 
   static async getTenants(token: string): Promise<ITenantsResponseV2[]> {
-    const response = await fetch(this.GET_TENANTS_URL, {
+    const response = await fetch(getTenantsUrl(), {
       headers: {
         Authorization: `Bearer ${token}`,
       },

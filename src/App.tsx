@@ -5,6 +5,7 @@ import AuthProvider from "./providers/AuthProvider";
 import Main from "./components/Main";
 
 const App = () => {
+  
   return (
     <>
       <AuthProvider>

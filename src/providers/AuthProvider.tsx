@@ -7,6 +7,7 @@ import { identityService } from "../services/IdentityService";
 import { FRONTEGG_CONFIG } from "../config/frontegg";
 import { getVendorToken } from "../utils/auth";
 import { ITenantsResponseV2 } from "@frontegg/rest-api";
+import { getBaseUrl } from "../utils/api";
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -77,25 +78,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const logout = async () => {
     setIsLoading(true);
-    const token = await getVendorToken(); // you'll have to use a vendor token here, better to use your own backend for that
-    if (token) {
-      try {
-        await fetch(
-          `https://api.frontegg.com/identity/resources/auth/v1/logout`,
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "frontegg-vendor-host": window.location.hostname,
-            },
-            credentials: "include",
-          }
-        );
-      } catch (error) {
-        console.error("Logout failed:", error);
-      }
-    }
+
     updateAuthState(null, null);
+    window.location.href = `${getBaseUrl()}/oauth/logout?post_logout_redirect_uri=${
+      window.location.href
+    }`;
+
     setIsLoading(false);
   };
 
@@ -116,9 +104,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     tenants,
   };
 
-  return (
-    <AuthContext.Provider value={{ ...value }}>{children}</AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;

@@ -38,7 +38,6 @@ export interface AuthContextType {
   loginWithAuthCodeFlow: () => Promise<void>;
   logout: () => void;
   getAccessToken: () => string | null;
-  setAccessToken: (token: string | null) => void;
   updateAuthState: (token: string | null, refreshToken: string | null) => void;
   isLoading: boolean;
   tenants: ITenantsResponseV2[];

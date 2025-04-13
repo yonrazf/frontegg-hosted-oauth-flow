@@ -5,6 +5,15 @@ import {
 } from "../utils/auth";
 import { FRONTEGG_CONFIG, FRONTEGG_ENDPOINTS } from "../config/frontegg";
 import { TokenResponse } from "../types/oauth";
+import {
+  SANDBOX_CONTEXT_OPTIONS,
+  SANDBOX_ENDPOINTS,
+} from "../config/sanboxContextOptions";
+import {
+  getAuthorizationUrl,
+  getTokenUrl,
+  getAuthorizationClientId,
+} from "../utils/api";
 
 class AuthService {
   private static instance: AuthService;
@@ -32,10 +41,11 @@ class AuthService {
   async initiateLogin(): Promise<void> {
     const code_verifier = createRandomString();
     localStorage.setItem("code_verifier", code_verifier);
+    localStorage.setItem("FRONTEGG_OAUTH_FLOW", "pkce");
     const code_challenge = await generateCodeChallenge(code_verifier);
 
     const params = new URLSearchParams({
-      client_id: FRONTEGG_CONFIG.oauthAppId!,
+      client_id: getAuthorizationClientId()!,
       redirect_uri: FRONTEGG_CONFIG.oauthRedirectUri,
       response_type: "code",
       scope: FRONTEGG_CONFIG.scopes.join(" "),
@@ -43,9 +53,7 @@ class AuthService {
       code_challenge: code_challenge,
     });
 
-    window.location.href = `${
-      FRONTEGG_ENDPOINTS.authorization
-    }?${params.toString()}`;
+    window.location.href = `${getAuthorizationUrl()}?${params.toString()}`;
   }
 
   // Handle the PKCE flow token exchange
@@ -62,7 +70,7 @@ class AuthService {
       code_verifier: code_verifier,
     });
 
-    const response = await fetch(FRONTEGG_ENDPOINTS.token, {
+    const response = await fetch(getTokenUrl(), {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -84,14 +92,12 @@ class AuthService {
     return tokens;
   }
 
-  async refreshAccessToken(
-    refresh_token: string,
-    isPKCE: boolean
-  ): Promise<void> {
+  async refreshAccessToken(refresh_token: string): Promise<void> {
     if (!refresh_token) {
       throw new Error("No refresh token available");
     }
-
+    const oauthFlow = localStorage.getItem("FRONTEGG_OAUTH_FLOW");
+    const isPKCE = oauthFlow === "pkce";
     const paramsOptions = isPKCE
       ? ({
           grant_type: "refresh_token",
@@ -116,7 +122,7 @@ class AuthService {
           "Content-Type": "application/x-www-form-urlencoded",
         } as Record<string, string>);
 
-    const response = await fetch(FRONTEGG_ENDPOINTS.token, {
+    const response = await fetch(getTokenUrl(), {
       method: "POST",
       headers,
       body: params.toString(),
@@ -173,7 +179,9 @@ class AuthService {
   // Initiate the auth code flow
   async initiateLoginWithAuthCodeFlow() {
     const redirectUriConfig = await this.getRedirectUriConfig();
-    console.log("redirectUriConfig:", redirectUriConfig);
+
+    localStorage.setItem("FRONTEGG_OAUTH_FLOW", "auth_code");
+
     if (!redirectUriConfig) {
       throw new Error("No redirect URI config found");
     }
@@ -191,14 +199,12 @@ class AuthService {
       response_type: "code",
       scope: FRONTEGG_CONFIG.scopes.join(" "),
     });
-
     console.log(
       "Redirecting to:",
-      `${FRONTEGG_ENDPOINTS.authorization}?${params.toString()}`
+      `${getAuthorizationUrl()}?${params.toString()}`
     );
-    window.location.href = `${
-      FRONTEGG_ENDPOINTS.authorization
-    }?${params.toString()}`;
+
+    window.location.href = `${getAuthorizationUrl()}?${params.toString()}`;
   }
 
   // Handle the auth code flow token exchange
@@ -209,7 +215,7 @@ class AuthService {
       redirect_uri: FRONTEGG_CONFIG.oauthRedirectUri,
     });
 
-    const response = await fetch(FRONTEGG_ENDPOINTS.token, {
+    const response = await fetch(getTokenUrl(), {
       method: "POST",
       headers: {
         Authorization: `Basic ${btoa(
