@@ -4,12 +4,13 @@ import {
   getAuthCodeFlowAuthorization,
   getVendorToken,
 } from "../utils/auth";
-import { FRONTEGG_CONFIG } from "../config/frontegg";
+import { FRONTEGG_CONFIG, FRONTEGG_ENDPOINTS } from "../config/frontegg";
 import { TokenResponse } from "../types/oauth";
 import {
   getAuthorizationUrl,
   getTokenUrl,
   getAuthorizationClientId,
+  getBaseUrl,
 } from "../utils/api";
 
 class AuthService {
@@ -131,6 +132,23 @@ class AuthService {
 
     const tokens = await response.json();
     return tokens;
+  }
+
+  async silentRefresh(): Promise<TokenResponse> {
+    const baseUrl = getBaseUrl();
+
+    const silentRefreshEndpoint = `${baseUrl}${FRONTEGG_ENDPOINTS.silent_refresh}`;
+
+    const response = await fetch(silentRefreshEndpoint, {
+      method: "POST",
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      console.error("failed to refresh token");
+    }
+    const result = await response.json();
+    return result;
   }
 
   // ------------------------------------------------------------

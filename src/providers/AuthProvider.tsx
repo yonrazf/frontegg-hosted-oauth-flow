@@ -30,11 +30,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const token = getAccessToken();
-    if (token) {
-      updateAuthState(token, refreshToken);
-    }
-    setIsLoading(false);
+    getAccessToken();
   }, []);
 
   const updateAuthState = async (
@@ -87,8 +83,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setIsLoading(false);
   };
 
-  const getAccessToken = () => {
-    return accessToken;
+  const getAccessToken = async () => {
+    setIsLoading(true);
+    const tokenResult = await authService.silentRefresh();
+    setIsLoading(false);
+    if (tokenResult.access_token) {
+      updateAuthState(tokenResult.access_token, tokenResult.refresh_token);
+      return tokenResult.access_token;
+    }
+    return false;
   };
 
   const value = {

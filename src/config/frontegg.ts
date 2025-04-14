@@ -19,4 +19,5 @@ export const FRONTEGG_ENDPOINTS = {
   token: `/oauth/token`,
   currentUser: `/identity/resources/users/v2/me`,
   tenants: `/identity/resources/users/v2/me/tenants`,
+  silent_refresh: "/frontegg/oauth/authorize/silent",
 };
