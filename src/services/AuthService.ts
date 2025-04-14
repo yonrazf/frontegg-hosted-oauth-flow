@@ -1,14 +1,11 @@
 import {
   createRandomString,
   generateCodeChallenge,
+  getAuthCodeFlowAuthorization,
   getVendorToken,
 } from "../utils/auth";
-import { FRONTEGG_CONFIG, FRONTEGG_ENDPOINTS } from "../config/frontegg";
+import { FRONTEGG_CONFIG } from "../config/frontegg";
 import { TokenResponse } from "../types/oauth";
-import {
-  SANDBOX_CONTEXT_OPTIONS,
-  SANDBOX_ENDPOINTS,
-} from "../config/sanboxContextOptions";
 import {
   getAuthorizationUrl,
   getTokenUrl,
@@ -111,14 +108,14 @@ class AuthService {
 
     const params = new URLSearchParams(paramsOptions);
 
+    const authorization = getAuthCodeFlowAuthorization();
+
     const headers = isPKCE
       ? {
           "Content-Type": "application/x-www-form-urlencoded",
         }
       : ({
-          Authorization: `Basic ${btoa(
-            `${FRONTEGG_CONFIG.oauthAppId}:${FRONTEGG_CONFIG.oauthAppSecret}` // can be either your app's client_id and client_secret in the applications section, or the redirect_uri-specific client_id and client_secret
-          )}`,
+          Authorization: `Basic ${authorization}`,
           "Content-Type": "application/x-www-form-urlencoded",
         } as Record<string, string>);
 
@@ -193,8 +190,10 @@ class AuthService {
       throw new Error("No redirect URI found");
     }
 
+    const client_id = getAuthorizationClientId()!;
+
     const params = new URLSearchParams({
-      client_id: FRONTEGG_CONFIG.oauthAppId!, // this will be redirectUri.clientId if you decide to use redirect_uri-specific client_id and client_secret
+      client_id, // this will be redirectUri.clientId if you decide to use redirect_uri-specific client_id and client_secret
       redirect_uri: FRONTEGG_CONFIG.oauthRedirectUri,
       response_type: "code",
       scope: FRONTEGG_CONFIG.scopes.join(" "),
@@ -215,12 +214,12 @@ class AuthService {
       redirect_uri: FRONTEGG_CONFIG.oauthRedirectUri,
     });
 
+    const authorization = getAuthCodeFlowAuthorization();
+
     const response = await fetch(getTokenUrl(), {
       method: "POST",
       headers: {
-        Authorization: `Basic ${btoa(
-          `${FRONTEGG_CONFIG.oauthAppId}:${FRONTEGG_CONFIG.oauthAppSecret}` // can be either your app's client_id and client_secret in the applications section, or the redirect_uri-specific client_id and client_secret
-        )}`,
+        Authorization: `Basic ${authorization}`,
         "Content-Type": "application/x-www-form-urlencoded",
       },
       body: params.toString(),

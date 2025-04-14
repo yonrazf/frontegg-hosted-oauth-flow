@@ -29,19 +29,19 @@ const Welcome = () => {
         </button>
         <button
           className={`primary-button ${
-            useSandboxCredentials ? "disabled" : ""
+            // useSandboxCredentials ? "disabled" : ""
+            ""
           }`}
-          disabled={useSandboxCredentials}
           onClick={loginWithAuthCodeFlow}
         >
           Sign in with Auth Code Flow
         </button>
-        {useSandboxCredentials && (
+        {/* {useSandboxCredentials && (
           <p className="sandbox-credentials-text">
             Auth code flow is disabled when using sandbox credentials since it
             requires app-specific clientId and secret.
           </p>
-        )}
+        )} */}
       </div>
     </section>
   );

@@ -1,4 +1,5 @@
 import { FRONTEGG_CONFIG } from "../config/frontegg";
+import { SANDBOX_CONTEXT_OPTIONS } from "../config/sanboxContextOptions";
 
 export async function getVendorToken() {
   console.log("clientId:", FRONTEGG_CONFIG.clientId);
@@ -46,4 +47,24 @@ export async function generateCodeChallenge(
     .replace(/=/g, "")
     .replace(/\+/g, "-")
     .replace(/\//g, "_");
+}
+
+export function getSandboxAuthorization() {
+  return `Basic ${btoa(
+    `${SANDBOX_CONTEXT_OPTIONS.appId}:${SANDBOX_CONTEXT_OPTIONS.apiKey}` // can be either your app's client_id and client_secret in the applications section, or the redirect_uri-specific client_id and client_secret
+  )}`;
+}
+
+export function getFronteggAuthorization() {
+  return `Basic ${btoa(
+    `${FRONTEGG_CONFIG.oauthAppId}:${FRONTEGG_CONFIG.oauthAppSecret}` // can be either your app's client_id and client_secret in the applications section, or the redirect_uri-specific client_id and client_secret
+  )}`;
+}
+
+export function getAuthCodeFlowAuthorization() {
+  const useSandboxCredentials =
+    localStorage.getItem("useSandboxCredentials") === "true";
+  return useSandboxCredentials
+    ? getSandboxAuthorization()
+    : getFronteggAuthorization();
 }
