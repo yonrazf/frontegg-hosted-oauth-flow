@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../providers/AuthProvider";
 import SandboxToggle from "./SandboxToggle";
 
@@ -27,21 +27,9 @@ const Welcome = () => {
         <button className="primary-button" onClick={loginWithPKCE}>
           Sign in with PKCE
         </button>
-        <button
-          className={`primary-button ${
-            // useSandboxCredentials ? "disabled" : ""
-            ""
-          }`}
-          onClick={loginWithAuthCodeFlow}
-        >
+        <button className={`primary-button`} onClick={loginWithAuthCodeFlow}>
           Sign in with Auth Code Flow
         </button>
-        {/* {useSandboxCredentials && (
-          <p className="sandbox-credentials-text">
-            Auth code flow is disabled when using sandbox credentials since it
-            requires app-specific clientId and secret.
-          </p>
-        )} */}
       </div>
     </section>
   );
