@@ -1,16 +1,16 @@
 ![React Hosted Login Banner](/public/assets/react-banner.png)
 
-# React hosted login sample
+# React hosted OAuth login sample
 
-This sample showcases how to seamlessly add authentication and user management to your React app using Frontegg’s hosted login method.
+This sample showcases how to seamlessly add authentication via OAuth to your React app using Frontegg’s hosted login method - please refer to [our integration guide](https://developers.frontegg.com/guides/management/frontegg-idp/native-hosted) for details on the full implementation
 
 ## This app showcases
 
 - Redirect users to Frontegg’s hosted login
 - Manage and track user authentication state
+- Use either __PKCE__ or __Auth Code__ flows
 - Access and display user profile details
 - Handle account state and data with ease
-- Implement seamless account switching functionality
 
 ## What you’ll need
 
@@ -41,7 +41,7 @@ If you're using your own credentials, follow the guidelines below.
 Run the following command:
 
 ```bash
-npm clone <repo>
+git clone <repo>
 ```
 
 ### 3. Install dependencies -
@@ -61,7 +61,3 @@ npm start
 ```
 
 The app will be available at [http://localhost:3000](http://localhost:3000).
-
-![React sample](/public/assets/sample-react.png)
-
-### Experience Frontegg in action!
