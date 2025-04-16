@@ -60,4 +60,6 @@ To start the application, run:
 npm start
 ```
 
+![App running gif](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExY3lpdTB1dW5naXdlNm92eGQzbWR6NzcxeWptODR6cXlncjZxM2p3eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/mndEQiYieCQVL4vXaM/giphy.gif)
+
 The app will be available at [http://localhost:3000](http://localhost:3000).
