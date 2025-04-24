@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { authService } from "../services/AuthService";
 import { FRONTEGG_CONFIG } from "../config/frontegg";
-import { useAuth } from "../providers/AuthProvider";
+import { useAuth } from "../hooks/useAuth";
+import { TokenResponse } from "../types/oauth";
 
 export const OAuthCallback = () => {
   const navigate = useNavigate();
@@ -32,15 +33,14 @@ export const OAuthCallback = () => {
 
       try {
         const oauthFlow = localStorage.getItem("FRONTEGG_OAUTH_FLOW");
+        let tokens: TokenResponse;
         if (oauthFlow === "pkce") {
-          console.log(" state is true, going with pkce flow");
-          const tokens = await authService.handleCallback(code);
-          updateAuthState(tokens.access_token, tokens.refresh_token);
+          tokens = await authService.handleCallback(code);
         } else {
-          console.log("state is false, going with auth code flow");
-          const tokens = await authService.handleAuthCodeFlowCallback(code);
-          updateAuthState(tokens.access_token, tokens.refresh_token);
+          tokens = await authService.handleAuthCodeFlowCallback(code);
         }
+
+        updateAuthState(tokens.access_token, tokens.refresh_token);
 
         // Get the saved redirect URL or default to home
         const redirectUrl =
@@ -58,10 +58,7 @@ export const OAuthCallback = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <div className="text-center">
-        <h2 className="text-2xl font-semibold mb-4">Processing login...</h2>
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto"></div>
-      </div>
+      <div className="text-center"></div>
     </div>
   );
 };

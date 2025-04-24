@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuth } from "../providers/AuthProvider";
+import { useAuth } from "../hooks/useAuth";
 import SandboxToggle from "./SandboxToggle";
 
 const Welcome = () => {

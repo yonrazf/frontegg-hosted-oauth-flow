@@ -1,35 +1,40 @@
-import { useAuth } from "../providers/AuthProvider";
+import { useAuth } from "../hooks/useAuth";
 import getInitials from "../utils/getInitials";
 import CopyToClipboardButton from "./CopyToClipboardButton";
 import TenantsDropdown from "./TenantsDropdown";
 import { useEffect, useMemo } from "react";
 import { ITenantsResponseV2 } from "@frontegg/rest-api";
-
-// type ITentantsExtended = ITenantsResponseV2 & {
-//   creatorEmail: string;
-// };
+import { getBaseUrl } from "../utils/api";
 
 const TenantInfo = () => {
   const { user, tenants } = useAuth();
 
-  // const {
-  //   loaders: { USERS: isLoadingUsers },
-  //   users,
-  // } = useTeamState();
+  const switchTenant = async (tenantId: string) => {
+    const response = await fetch(
+      `${getBaseUrl()}/identity/resources/users/v1/tenant`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${user?.accessToken}`,
+          "Content-Type": "application/json",
+          "frontegg-user-id": user?.id || "",
+          "frontegg-tenant-id": user?.tenantId || "",
+        },
+        body: JSON.stringify({
+          tenantId: tenantId,
+        }),
+      }
+    );
 
-  // useEffect(() => {
-  //   loadUsers({ pageOffset: 0, pageSize: 100 });
-  // }, [loadUsers]);
-
-  // const usersCount = users.length;
-
-  // const openAccountSettings = () => {
-  //   window.location.href = "#/admin-box/account";
-  //   AdminPortal.show();
-  // };
+    if (response.ok) {
+      window.location.reload();
+    } else {
+      console.error("Failed to switch tenant");
+    }
+  };
 
   const handleSwitchTenant = (tenant: ITenantsResponseV2) => {
-    // switchTenant({ tenantId: tenant.tenantId }); // not implemented yet
+    switchTenant(tenant.tenantId);
   };
 
   const activeTenant = useMemo(() => {
@@ -63,27 +68,7 @@ const TenantInfo = () => {
             <CopyToClipboardButton text={activeTenant!.id} />
           </div>
         </div>
-
-        {/* <div className="tenant-info-item">
-          <p className="tenant-info-item-title">Members</p>
-          <p className="tenant-info-item-value">
-            {isLo ? "loading..." : usersCount}
-          </p>
-        </div> */}
-        {/* <div className="tenant-info-item">
-          <p className="tenant-info-item-title">Creator</p>
-          <p className="tenant-info-item-value">
-            {(tenantsState.activeTenant as ITentantsExtended).creatorEmail ||
-              "system"}
-          </p>
-        </div> */}
       </div>
-      {/* <button
-        className="secondary-button edit-button"
-        onClick={openAccountSettings}
-      >
-        Edit account
-      </button> */}
     </div>
   ) : null;
 };

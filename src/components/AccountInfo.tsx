@@ -2,7 +2,7 @@ import { memo } from "react";
 import TenantInfo from "./TenantInfo";
 import UserProfileIcon from "./UserProfileIcon";
 import UserInfoItem from "./UserInfoItem";
-import { useAuth } from "../providers/AuthProvider";
+import { useAuth } from "../hooks/useAuth";
 
 const AccountInfo = () => {
   const { user, isLoading } = useAuth();
@@ -12,16 +12,9 @@ const AccountInfo = () => {
   return (
     <main className="section-screen">
       <div className="section-card account-card">
-        {/* <div className="title-wrapper">
+        <div className="title-wrapper">
           <h1 className="title">Hello, {user?.name || ""}!</h1>
-          <button
-            className="primary-button fit-content"
-            onClick={handleAdminPortal}
-            aria-label="Open self-service portal"
-          >
-            Self-service portal
-          </button>
-        </div> */}
+        </div>
         <div className="tenants-wrapper">
           <div className="tenant-card">
             <div className="tenant-title">
@@ -35,13 +28,6 @@ const AccountInfo = () => {
               <UserInfoItem title="Email" value={user?.email || ""} />
               <UserInfoItem title="Roles" value={userRoles || ""} />
             </div>
-            {/* <button
-              className="secondary-button edit-button"
-              onClick={handleAdminPortal}
-              aria-label="Edit user profile"
-            >
-              Edit user
-            </button> */}
           </div>
           <TenantInfo />
         </div>

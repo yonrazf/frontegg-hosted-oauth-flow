@@ -134,21 +134,25 @@ class AuthService {
     return tokens;
   }
 
-  async silentRefresh(): Promise<TokenResponse> {
+  async silentRefresh(): Promise<TokenResponse | null> {
     const baseUrl = getBaseUrl();
 
     const silentRefreshEndpoint = `${baseUrl}${FRONTEGG_ENDPOINTS.silent_refresh}`;
+    try {
+      const response = await fetch(silentRefreshEndpoint, {
+        method: "POST",
+        credentials: "include",
+      });
 
-    const response = await fetch(silentRefreshEndpoint, {
-      method: "POST",
-      credentials: "include",
-    });
-
-    if (!response.ok) {
-      console.error("failed to refresh token");
+      if (!response.ok) {
+        console.error("failed to refresh token");
+      }
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error("failed to refresh token", error);
+      return null;
     }
-    const result = await response.json();
-    return result;
   }
 
   // ------------------------------------------------------------
@@ -205,7 +209,7 @@ class AuthService {
       (r: any) => r.redirectUriPattern === FRONTEGG_CONFIG.oauthRedirectUri
     );
     if (!redirectUri) {
-      throw new Error("No redirect URI found");
+      console.error("No redirect URI found");
     }
 
     const client_id = getAuthorizationClientId()!;

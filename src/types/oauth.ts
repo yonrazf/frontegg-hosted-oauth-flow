@@ -36,9 +36,13 @@ export interface AuthContextType {
   user: User | null;
   loginWithPKCE: () => Promise<void>;
   loginWithAuthCodeFlow: () => Promise<void>;
-  logout: () => void;
-  getAccessToken: () => string | null;
-  updateAuthState: (token: string | null, refreshToken: string | null) => void;
+  logout: () => Promise<void>;
+  getAccessToken: () => Promise<string | false>;
+  updateAuthState: (
+    token: string | null,
+    refreshToken: string | null
+  ) => Promise<void>;
+  refreshToken: string | null;
   isLoading: boolean;
   tenants: ITenantsResponseV2[];
 }

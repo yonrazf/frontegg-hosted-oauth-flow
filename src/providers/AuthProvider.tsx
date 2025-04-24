@@ -9,15 +9,7 @@ import { getVendorToken } from "../utils/auth";
 import { ITenantsResponseV2 } from "@frontegg/rest-api";
 import { getBaseUrl } from "../utils/api";
 
-const AuthContext = createContext<AuthContextType | null>(null);
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
-};
+export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -87,7 +79,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setIsLoading(true);
     const tokenResult = await authService.silentRefresh();
     setIsLoading(false);
-    if (tokenResult.access_token) {
+    if (tokenResult && tokenResult.access_token) {
       updateAuthState(tokenResult.access_token, tokenResult.refresh_token);
       return tokenResult.access_token;
     }

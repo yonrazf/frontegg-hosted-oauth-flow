@@ -2,7 +2,7 @@ import Header from "./Header";
 import AccountInfo from "./AccountInfo";
 import Welcome from "./Welcome";
 import SignupBanner from "./SignupBanner";
-import { useAuth } from "../providers/AuthProvider";
+import { useAuth } from "../hooks/useAuth";
 
 const Main = () => {
   const { isAuthenticated, logout, isLoading } = useAuth(); // using our custom auth provider
