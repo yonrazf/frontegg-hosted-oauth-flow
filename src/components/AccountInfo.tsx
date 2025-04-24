@@ -5,7 +5,7 @@ import UserInfoItem from "./UserInfoItem";
 import { useAuth } from "../hooks/useAuth";
 
 const AccountInfo = () => {
-  const { user, isLoading } = useAuth();
+  const { user } = useAuth();
 
   const userRoles = user?.roles.map((role) => role.name).join(", ");
 

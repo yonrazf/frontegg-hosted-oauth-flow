@@ -2,7 +2,7 @@ import { useAuth } from "../hooks/useAuth";
 import getInitials from "../utils/getInitials";
 import CopyToClipboardButton from "./CopyToClipboardButton";
 import TenantsDropdown from "./TenantsDropdown";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { ITenantsResponseV2 } from "@frontegg/rest-api";
 import { getBaseUrl } from "../utils/api";
 
